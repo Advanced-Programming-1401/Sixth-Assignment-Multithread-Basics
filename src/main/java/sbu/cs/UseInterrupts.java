@@ -10,7 +10,7 @@ package sbu.cs;
     Take note that you are NOT ALLOWED to change or delete any existing line of code.
  */
 
-public class Interruptions
+public class UseInterrupts
 {
 /*
     TODO
