@@ -53,6 +53,7 @@ public class UseInterrupts
      If an object from this type of thread is Interrupted, it must print this:
         "{ThreadName} has been interrupted"
      And then terminate itself.
+     (Hint: Use the isInterrupted() method)
  */
     public static class LoopThread extends Thread {
         int value;
