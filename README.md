@@ -45,4 +45,4 @@ In this assignment, you are given three introductory exercises focused on the ba
 - Upload your report to your fork on GitHub
 
 
-The deadline for submitting your code is Wednesday, May 7 (13th of Ordibehesht). Good luck, happy coding and hasta luego!
+The deadline for submitting your code is Wednesday, May 3 (13th of Ordibehesht). Good luck, happy coding and hasta luego!
