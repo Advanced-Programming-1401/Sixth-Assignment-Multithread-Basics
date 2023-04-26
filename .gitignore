@@ -215,3 +215,21 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/java,macos,linux,windows,intellij
+.idea/compiler.xml
+.idea/jarRepositories.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/modules/Sixth-Assignment-Multithread-Basics.test.iml
+.idea/vcs.xml
+build/reports/tests/test/classes/sbu.cs.CPU_SimulatorTest.html
+build/reports/tests/test/css/base-style.css
+build/reports/tests/test/css/style.css
+build/reports/tests/test/index.html
+build/reports/tests/test/js/report.js
+build/reports/tests/test/packages/sbu.cs.html
+build/test-results/test/binary/output.bin
+build/test-results/test/binary/output.bin.idx
+build/test-results/test/binary/results.bin
+build/test-results/test/TEST-sbu.cs.CPU_SimulatorTest.xml
+build/tmp/compileJava/previous-compilation-data.bin
+build/tmp/compileTestJava/previous-compilation-data.bin
