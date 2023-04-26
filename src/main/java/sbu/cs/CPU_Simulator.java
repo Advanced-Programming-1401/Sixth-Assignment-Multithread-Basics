@@ -28,7 +28,7 @@ public class CPU_Simulator
 
     /*
         Simulate running a task by utilizing the sleep method for the duration of
-        the task's processingTime.
+        the task's processingTime. The processing time is given in milliseconds.
     */
         @Override
         public void run() {

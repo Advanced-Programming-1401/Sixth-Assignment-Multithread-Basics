@@ -16,7 +16,7 @@ public class UseInterrupts
     TODO
      Analyse the following class and add new code where necessary.
      If an object from this type of thread is Interrupted, it must print this:
-        "{ThreadName} has been interrupted".
+        "{ThreadName} has been interrupted"
      And then terminate itself.
  */
     public static class SleepThread extends Thread {
@@ -51,7 +51,7 @@ public class UseInterrupts
     TODO
      Analyse the following class and add new code where necessary.
      If an object from this type of thread is Interrupted, it must print this:
-        "{ThreadName} has been interrupted".
+        "{ThreadName} has been interrupted"
      And then terminate itself.
  */
     public static class LoopThread extends Thread {

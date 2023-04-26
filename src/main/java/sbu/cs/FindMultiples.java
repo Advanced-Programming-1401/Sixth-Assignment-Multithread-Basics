@@ -7,8 +7,8 @@ package sbu.cs;
     Note that an integer such as 15 (which is a multiple of 3 and 5) is only
     counted once.
 
-    The Positive integer n > 0 is given to you as input. Create a thread for each
-    of the divisors (3, 5, 7) and find their multiples in the given range.
+    The Positive integer n > 0 is given to you as input. Create as many threads as
+    you need to solve the problem. You can use a Thread Pool for bonus points.
 
     Example:
     Input: n = 10
