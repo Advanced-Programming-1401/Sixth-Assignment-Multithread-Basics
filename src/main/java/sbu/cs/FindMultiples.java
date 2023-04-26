@@ -19,7 +19,8 @@ package sbu.cs;
     Use the tests provided in the test folder to ensure your code works correctly.
  */
 
-public class FindMultiples {
+public class FindMultiples
+{
 
     // TODO create the required multithreading class/classes using your preferred method.
 

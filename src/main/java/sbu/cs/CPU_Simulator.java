@@ -17,7 +17,8 @@ import java.util.List;
     Use the tests provided in the test folder to ensure your code works correctly.
  */
 
-public class CPU_Simulator {
+public class CPU_Simulator
+{
     public static class Task implements Runnable {
         long processingTime;
         String ID;
