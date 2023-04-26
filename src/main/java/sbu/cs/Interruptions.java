@@ -13,7 +13,8 @@ package sbu.cs;
 public class Interruptions
 {
 /*
-    TODO  Analyse the following class. If an object from this type of thread is
+    TODO
+     Analyse the following class. If an object from this type of thread is
      interrupted, it must print this:
         "{ThreadName} has been interrupted".
      And then terminate itself.
@@ -39,6 +40,7 @@ public class Interruptions
                 }
                 finally {
                     this.sleepCounter--;
+                    System.out.println("Number of sleeps remaining: " + this.sleepCounter);
                 }
             }
 
@@ -46,7 +48,8 @@ public class Interruptions
     }
 
 /*
-    TODO  Analyse the following class. If an object from this type of thread is
+    TODO
+     Analyse the following class. If an object from this type of thread is
      interrupted, it must print this:
         "{ThreadName} has been interrupted".
      And then terminate itself.
