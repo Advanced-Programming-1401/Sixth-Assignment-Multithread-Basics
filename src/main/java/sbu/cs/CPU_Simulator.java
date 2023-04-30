@@ -23,7 +23,8 @@ public class CPU_Simulator
         long processingTime;
         String ID;
         public Task(String ID, long processingTime) {
-        // TODO
+            this.ID = ID;
+            this.processingTime = processingTime;
         }
 
     /*
@@ -32,7 +33,12 @@ public class CPU_Simulator
     */
         @Override
         public void run() {
-        // TODO
+            try {
+                Thread.sleep(processingTime);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
         }
     }
 
@@ -41,14 +47,33 @@ public class CPU_Simulator
         Here the CPU selects the next shortest task to run (also known as the
         shortest task first scheduling algorithm) and creates a thread for it to run.
     */
-    public ArrayList<String> startSimulation(ArrayList<Task> tasks) {
+    public static ArrayList<String> startSimulation(ArrayList<Task> tasks) {
         ArrayList<String> executedTasks = new ArrayList<>();
+        tasks = sortTasks(tasks);
 
-        // TODO
+        for (int i = 0; i < tasks.size(); i++) {
+            Thread thread = new Thread(tasks.get(i));
+            thread.start();
+            executedTasks.add(tasks.get(i).ID);
+        }
 
         return executedTasks;
     }
+    public static ArrayList<Task> sortTasks (ArrayList<Task> tasks) {
+        for (int i = 0; i < tasks.size(); i++) {
+            for (int j = 0; j < tasks.size(); j++) {
+                if (tasks.get(i).processingTime < tasks.get(j).processingTime) {
+                    Task temp = tasks.get(i);
+                    tasks.set(i, tasks.get(j));
+                    tasks.set(j, temp);
+
+                }
+            }
+        }
+        return tasks;
+    }
 
     public static void main(String[] args) {
+
     }
 }
