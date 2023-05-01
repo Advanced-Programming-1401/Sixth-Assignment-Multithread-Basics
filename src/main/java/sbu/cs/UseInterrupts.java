@@ -10,6 +10,9 @@ package sbu.cs;
     Take note that you are NOT ALLOWED to change or delete any existing line of code.
  */
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class UseInterrupts
 {
 /*
@@ -82,10 +85,30 @@ public class UseInterrupts
         SleepThread sleepThread = new SleepThread(5);
         sleepThread.start();
 
+        Timer sleepTimer = new Timer();
+        sleepTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (sleepThread.isAlive()) {
+                    sleepThread.interrupt();
+                    System.out.println(sleepThread.getName() + " has been interrupted");
+                }
+            }
+        }, 3000);
         // TODO  Check if this thread runs for longer than 3 seconds (if it does, interrupt it)
 
         LoopThread loopThread = new LoopThread(3);
         loopThread.start();
+        Timer loopTimer = new Timer();
+        loopTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (loopThread.isAlive()) {
+                    loopThread.interrupt();
+                    System.out.println(loopThread.getName() + " has been interrupted");
+                }
+            }
+        }, 3000);
 
         // TODO  Check if this thread runs for longer than 3 seconds (if it does, interrupt it)
 

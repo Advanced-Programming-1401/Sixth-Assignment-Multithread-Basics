@@ -19,10 +19,63 @@ package sbu.cs;
     Use the tests provided in the test folder to ensure your code works correctly.
  */
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
+
+class divisibleBy3 extends Thread{
+
+
+    private long n;
+    public divisibleBy3(long n){
+        this.n=n;
+    }
+    @Override
+    public void run() {
+        for (long i=1 ; i<=n ; i++){
+            if (i%3==0L){
+                FindMultiples.temp=i;
+                FindMultiples.increment();
+            }
+        }
+    }
+
+}
+
+class divisibleBy5 extends Thread{
+
+
+    private long n;
+    public divisibleBy5(long n){
+        this.n=n;
+    }
+    @Override
+    public void run() {
+        for (long i=1 ; i<=n ; i++){
+            if (i%5==0L){
+                FindMultiples.temp=i;
+                FindMultiples.increment();
+            }
+        }
+    }
+
+}
+
+class divisibleBy7 extends Thread{
+
+    private long n;
+    public divisibleBy7(long n){
+        this.n=n;
+    }
+    @Override
+    public void run() {
+        for (long i=1 ; i<=n ; i++){
+            if (i%7==0L){
+                FindMultiples.temp=i;
+                FindMultiples.increment();
+            }
+        }
+    }
+
+}
 
 public class FindMultiples
 {
@@ -35,10 +88,13 @@ public class FindMultiples
     New Threads and tasks should be created here.
     */
 
-    public ArrayList<Integer> dividends = new ArrayList<Integer>();
-    public static int n;
-    int temp = 0;
-    public synchronized void increment(){
+    public static synchronized void increment(){
+        FindMultiples.dividends.add(FindMultiples.temp);
+    }
+    public static ArrayList<Long> dividends = new ArrayList<Long>();
+    //public static int n;
+    public static long temp = 0;
+    /*public synchronized void increment(){
         dividends.add(temp);
     }
     Thread divisibleBy3  = new Thread(new Runnable() {
@@ -76,38 +132,40 @@ public class FindMultiples
             }
         }
     });
+*/
 
 
-
-    public int getSum() {
-        int sum = 0;
-        Set<Integer> set = new HashSet<>(dividends);
+    public Long getSum(long n) {
+        Long sum = 0L;
+        divisibleBy3 obj3 = new divisibleBy3(n);
+        divisibleBy5 obj5 = new divisibleBy5(n);
+        divisibleBy7 obj7 = new divisibleBy7(n);
+        obj3.start();
+        obj5.start();
+        obj7.start();
+        try {
+            obj3.join();
+            obj5.join();
+            obj7.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        Set<Long> set = new HashSet<>(dividends);
         dividends.clear();
         dividends.addAll(set);
 
-        for (int i : dividends){
+        for (long i : dividends){
             sum+=i;
         }
         return sum;
     }
 
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        n = input.nextInt();
+
         FindMultiples obj = new FindMultiples();
-        obj.divisibleBy3.start();
-        obj.divisibleBy5.start();
-        obj.divisibleBy7.start();
-        try {
-            obj.divisibleBy3.join();
-            obj.divisibleBy5.join();
-            obj.divisibleBy7.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        System.out.println(obj.getSum());
-
+        Scanner input = new Scanner(System.in);
+        int n = input.nextInt();
+        obj.getSum(n);
     }
 
 }
