@@ -19,24 +19,70 @@ package sbu.cs;
     Use the tests provided in the test folder to ensure your code works correctly.
  */
 
+import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class FindMultiples
 {
-
     // TODO create the required multithreading class/classes using your preferred method.
+    public static class doSum extends Thread {
+        int sumOfThread = 0;
+        int bound;
+        int divisibleTo;
+        static Lock sumLock = new ReentrantLock();
+        public doSum(int bound, int divisibleTo) {
+            this.bound = bound;
+            this.divisibleTo = divisibleTo;
+        }
 
+        public void run() {
+            for (int i = divisibleTo; i <= bound; i += divisibleTo) {
+                this.sumOfThread += i;
+            }
+
+            int sign = 1;
+            if ((this.divisibleTo == 15) || (this.divisibleTo == 21) || (this.divisibleTo == 35)) {
+                sign = -1;
+            }
+
+            sumLock.lock();
+            sum += sign * this.sumOfThread;
+            sumLock.unlock();
+        }
+    }
 
     /*
     The getSum function should be called at the start of your program.
     New Threads and tasks should be created here.
     */
-    public int getSum(int n) {
-        int sum = 0;
+    public static int sum = 0;
+    public static int getSum(int n) {
+        ArrayList<Thread> threads = new ArrayList<>();
+        threads.add(0, new doSum(n, 3));
+        threads.add(1, new doSum(n, 5));
+        threads.add(2, new doSum(n, 7));
+        threads.add(3, new doSum(n, 15));
+        threads.add(4, new doSum(n, 21));
+        threads.add(5, new doSum(n, 35));
+        threads.add(6, new doSum(n, 105));
 
-        // TODO
+        for (Thread thread : threads) {
+            thread.start();
+        }
+
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         return sum;
     }
 
     public static void main(String[] args) {
+        getSum(1000);
     }
 }
