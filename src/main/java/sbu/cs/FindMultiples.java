@@ -26,12 +26,12 @@ import java.util.concurrent.locks.ReentrantLock;
 public class FindMultiples
 {
     // TODO create the required multithreading class/classes using your preferred method.
-    public static class doSum extends Thread {
+    public static class DoSum extends Thread {
         int sumOfThread = 0;
         int bound;
         int divisibleTo;
         static Lock sumLock = new ReentrantLock();
-        public doSum(int bound, int divisibleTo) {
+        public DoSum(int bound, int divisibleTo) {
             this.bound = bound;
             this.divisibleTo = divisibleTo;
         }
@@ -59,13 +59,13 @@ public class FindMultiples
     public static int sum = 0;
     public static int getSum(int n) {
         ArrayList<Thread> threads = new ArrayList<>();
-        threads.add(0, new doSum(n, 3));
-        threads.add(1, new doSum(n, 5));
-        threads.add(2, new doSum(n, 7));
-        threads.add(3, new doSum(n, 15));
-        threads.add(4, new doSum(n, 21));
-        threads.add(5, new doSum(n, 35));
-        threads.add(6, new doSum(n, 105));
+        threads.add(0, new DoSum(n, 3));
+        threads.add(1, new DoSum(n, 5));
+        threads.add(2, new DoSum(n, 7));
+        threads.add(3, new DoSum(n, 15));
+        threads.add(4, new DoSum(n, 21));
+        threads.add(5, new DoSum(n, 35));
+        threads.add(6, new DoSum(n, 105));
 
         for (Thread thread : threads) {
             thread.start();
