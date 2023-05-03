@@ -31,6 +31,7 @@ public class CPU_Simulator_Dual_Core {
         coreOne.start();
         executedTasks.add(tasks.get(0).ID);
         System.out.println("task 0 with ID \"" + tasks.get(0).ID + "\" sent to core one");
+
         Thread coreTwo = new Thread(tasks.get(1));
         coreTwo.start();
         executedTasks.add(tasks.get(1).ID);
