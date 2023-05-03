@@ -1,8 +1,9 @@
 package sbu.cs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+// import java.util.Arrays;
+import java.util.Collections;
+// import java.util.List;
 
 /*
     For this exercise, you must simulate a CPU with a single core.
@@ -22,8 +23,26 @@ public class CPU_Simulator
     public static class Task implements Runnable {
         long processingTime;
         String ID;
+
         public Task(String ID, long processingTime) {
-        // TODO
+            this.ID = ID;
+            this.processingTime = processingTime;
+        }
+
+        public long getProcessingTime() {
+            return processingTime;
+        }
+
+        public void setProcessingTime(long processingTime) {
+            this.processingTime = processingTime;
+        }
+
+        public String getID() {
+            return ID;
+        }
+
+        public void setID(String iD) {
+            ID = iD;
         }
 
     /*
@@ -32,7 +51,12 @@ public class CPU_Simulator
     */
         @Override
         public void run() {
-        // TODO
+            try {
+                Thread.sleep(processingTime);
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 
@@ -44,9 +68,33 @@ public class CPU_Simulator
     public ArrayList<String> startSimulation(ArrayList<Task> tasks) {
         ArrayList<String> executedTasks = new ArrayList<>();
 
-        // TODO
+        ArrayList<Task> sortedTasks = sort(tasks);
+        for (Task task: sortedTasks) {
+            Thread t = new Thread(task);
+            try {
+                t.start();
+                t.join();
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
+
+            executedTasks.add(task.getID());
+        }
+
+
 
         return executedTasks;
+    }
+
+    public ArrayList<Task> sort(ArrayList<Task> tasks){
+        for(int i=0;i<tasks.size();i++){
+            for(int j=i+1;j<tasks.size();j++){
+                if(tasks.get(i).processingTime>tasks.get(j).processingTime){
+                    Collections.swap(tasks,i,j);
+                }
+            }
+        }
+        return tasks;
     }
 
     public static void main(String[] args) {
