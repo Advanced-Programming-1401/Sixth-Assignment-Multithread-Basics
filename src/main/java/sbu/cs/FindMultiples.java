@@ -19,8 +19,17 @@ package sbu.cs;
     Use the tests provided in the test folder to ensure your code works correctly.
  */
 
+import java.util.ArrayList;
+
 public class FindMultiples
 {
+
+    public void group3(int n){
+        for(int i=1;i<=n;i++){
+
+        }
+
+    }
 
     // TODO create the required multithreading class/classes using your preferred method.
 

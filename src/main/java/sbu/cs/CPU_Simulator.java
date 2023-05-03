@@ -2,7 +2,10 @@ package sbu.cs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
+import static java.util.Arrays.sort;
 
 /*
     For this exercise, you must simulate a CPU with a single core.
@@ -22,8 +25,18 @@ public class CPU_Simulator
     public static class Task implements Runnable {
         long processingTime;
         String ID;
+
+        public long getProcessingTime() {
+            return processingTime;
+        }
+
+        public String getID() {
+            return ID;
+        }
+
         public Task(String ID, long processingTime) {
-        // TODO
+            this.processingTime = processingTime;
+            this.ID = ID;
         }
 
     /*
@@ -32,7 +45,15 @@ public class CPU_Simulator
     */
         @Override
         public void run() {
-        // TODO
+            try {
+
+                Thread.sleep(300);
+
+            } catch (InterruptedException e) {
+
+                throw new RuntimeException(e);
+
+            }
         }
     }
 
@@ -43,11 +64,37 @@ public class CPU_Simulator
     */
     public ArrayList<String> startSimulation(ArrayList<Task> tasks) {
         ArrayList<String> executedTasks = new ArrayList<>();
+        ArrayList<Long> processingTimes=new ArrayList<>();
+        ArrayList<Task> sortedTasks=new ArrayList<>();
+        for(Task task:tasks){
+            processingTimes.add(task.getProcessingTime());
+        }
+        Collections.sort(processingTimes);
+        for(Long long1:processingTimes) {
+            for(Task task:tasks){
+                if(long1==task.getProcessingTime()){
+                    sortedTasks.add(task);
+                }
+            }
 
-        // TODO
+        }
+        for(Task task:sortedTasks){
+            Thread thread=new Thread(task);
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
+            executedTasks.add(task.getID());
+        }
         return executedTasks;
     }
+
+
+
+
 
     public static void main(String[] args) {
     }
