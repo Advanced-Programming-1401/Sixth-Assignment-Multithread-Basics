@@ -30,17 +30,25 @@ public class UseInterrupts
         @Override
         public void run() {
             System.out.println(this.getName() + " is Active.");
-
+            boolean breaking = false;
             while (this.sleepCounter > 0)
             {
+                if (Thread.interrupted()) {
+                    System.out.println(this.getName() + " has been interrupted");
+                    break;
+                }
+
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-
-                }
-                finally {
+                    breaking = true;
+                    break;
+                } finally {
                     this.sleepCounter--;
                     System.out.println("Number of sleeps remaining: " + this.sleepCounter);
+                    if (breaking) {
+                        System.out.println(this.getName() + " has been interrupted");
+                    }
                 }
             }
 
@@ -68,8 +76,11 @@ public class UseInterrupts
 
             for (int i = 0; i < 10; i += 3)
             {
+                if (this.isInterrupted()) {
+                    System.out.println(this.getName() + " has been interrupted");
+                    break;
+                }
                 i -= this.value;
-
             }
         }
     }
@@ -83,11 +94,24 @@ public class UseInterrupts
         sleepThread.start();
 
         // TODO  Check if this thread runs for longer than 3 seconds (if it does, interrupt it)
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            sleepThread.interrupt();
+        }
 
         LoopThread loopThread = new LoopThread(3);
         loopThread.start();
 
         // TODO  Check if this thread runs for longer than 3 seconds (if it does, interrupt it)
-
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            loopThread.interrupt();
+        }
     }
 }
