@@ -1,8 +1,6 @@
 package sbu.cs;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /*
     For this exercise, you must simulate a CPU with a single core.
@@ -23,7 +21,8 @@ public class CPU_Simulator
         long processingTime;
         String ID;
         public Task(String ID, long processingTime) {
-        // TODO
+            this.ID = ID;
+            this.processingTime = processingTime;
         }
 
     /*
@@ -32,7 +31,11 @@ public class CPU_Simulator
     */
         @Override
         public void run() {
-        // TODO
+        try {
+            Thread.sleep(processingTime);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         }
     }
 
@@ -41,14 +44,38 @@ public class CPU_Simulator
         Here the CPU selects the next shortest task to run (also known as the
         shortest task first scheduling algorithm) and creates a thread for it to run.
     */
-    public ArrayList<String> startSimulation(ArrayList<Task> tasks) {
+    public static ArrayList<String> startSimulation(ArrayList<Task> tasks) {
         ArrayList<String> executedTasks = new ArrayList<>();
-
-        // TODO
-
+        for (int i = 0; i < tasks.size(); i++){
+            for (int j = i+1; j < tasks.size(); j++){
+                if (tasks.get(i).processingTime > tasks.get(j).processingTime){
+                    Collections.swap(tasks, i, j);
+                }
+            }
+        }
+        for (Task task : tasks){
+            Thread thread = new Thread(task);
+            thread.start();
+            try{
+                executedTasks.add(task.ID);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
         return executedTasks;
     }
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Task> tasks = new ArrayList<>();
+        while (true) {
+            try {
+                Task task = new Task(sc.nextLine(), sc.nextByte());
+                tasks.add(task);
+            } catch (Exception e) {
+                break;
+            }
+        }
+        startSimulation(tasks);
     }
 }
