@@ -23,7 +23,8 @@ public class CPU_Simulator
         long processingTime;
         String ID;
         public Task(String ID, long processingTime) {
-        // TODO
+            this.ID = ID;
+            this.processingTime = processingTime;
         }
 
     /*
@@ -32,7 +33,11 @@ public class CPU_Simulator
     */
         @Override
         public void run() {
-        // TODO
+            try {
+                Thread.sleep(processingTime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -44,11 +49,43 @@ public class CPU_Simulator
     public ArrayList<String> startSimulation(ArrayList<Task> tasks) {
         ArrayList<String> executedTasks = new ArrayList<>();
 
-        // TODO
+        while (!tasks.isEmpty()) {
+            // Find the task with the shortest processing time
+            Task shortestTask = tasks.get(0);
+            for (Task task : tasks) {
+                if (task.processingTime < shortestTask.processingTime) {
+                    shortestTask = task;
+                }
+            }
 
+            // Remove the shortest task from the list and create a new thread for it
+            tasks.remove(shortestTask);
+            Thread thread = new Thread(shortestTask);
+
+            // Start the thread, wait for it to finish, and add its ID to the executed tasks list
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            executedTasks.add(shortestTask.ID);
+        }
         return executedTasks;
     }
 
     public static void main(String[] args) {
+
+        // Create some tasks for testing
+        ArrayList<Task> tasks = new ArrayList<>();
+        tasks.add(new Task("Task 1", 3000));
+        tasks.add(new Task("Task 2", 1000));
+        tasks.add(new Task("Task 3", 2000));
+
+        // Start the simulation and print the list of executed tasks
+        CPU_Simulator simulator = new CPU_Simulator();
+        ArrayList<String> executedTasks = simulator.startSimulation(tasks);
+        System.out.println("Executed tasks: " + executedTasks);
+
     }
 }
