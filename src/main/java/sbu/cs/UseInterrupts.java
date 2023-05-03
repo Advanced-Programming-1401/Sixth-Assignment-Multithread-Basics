@@ -12,13 +12,7 @@ package sbu.cs;
 
 public class UseInterrupts
 {
-/*
-    TODO
-     Analyse the following class and add new code where necessary.
-     If an object from this type of thread is Interrupted, it must print this:
-        "{ThreadName} has been interrupted"
-     And then terminate itself.
- */
+
     public static class SleepThread extends Thread {
         int sleepCounter;
 
@@ -31,12 +25,13 @@ public class UseInterrupts
         public void run() {
             System.out.println(this.getName() + " is Active.");
 
-            while (this.sleepCounter > 0)
+            while (this.sleepCounter > 0 && !Thread.currentThread().isInterrupted())
             {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
 
+                    Thread.currentThread().interrupt();
                 }
                 finally {
                     this.sleepCounter--;
@@ -44,17 +39,14 @@ public class UseInterrupts
                 }
             }
 
+            if (Thread.currentThread().isInterrupted()) {
+                System.out.println(this.getName() + " has been interrupted");
+            }
+
         }
     }
 
-/*
-    TODO
-     Analyse the following class and add new code where necessary.
-     If an object from this type of thread is Interrupted, it must print this:
-        "{ThreadName} has been interrupted"
-     And then terminate itself.
-     (Hint: Use the isInterrupted() method)
- */
+
     public static class LoopThread extends Thread {
         int value;
         public LoopThread(int value) {
@@ -66,10 +58,14 @@ public class UseInterrupts
         public void run() {
             System.out.println(this.getName() + " is Active.");
 
-            for (int i = 0; i < 10; i += 3)
+            for (int i = 0; i < 10 && !Thread.currentThread().isInterrupted(); i += 3)
             {
                 i -= this.value;
 
+            }
+
+            if (Thread.currentThread().isInterrupted()) {
+                System.out.println(this.getName() + " has been interrupted");
             }
         }
     }
@@ -82,12 +78,22 @@ public class UseInterrupts
         SleepThread sleepThread = new SleepThread(5);
         sleepThread.start();
 
-        // TODO  Check if this thread runs for longer than 3 seconds (if it does, interrupt it)
+        try {
+            Thread.sleep(3000);
+            sleepThread.interrupt();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         LoopThread loopThread = new LoopThread(3);
         loopThread.start();
 
-        // TODO  Check if this thread runs for longer than 3 seconds (if it does, interrupt it)
+        try {
+            Thread.sleep(3000);
+            loopThread.interrupt();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 }
