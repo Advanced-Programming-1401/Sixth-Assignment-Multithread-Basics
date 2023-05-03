@@ -35,10 +35,10 @@ public class CPU_Simulator
         public void run() {
             try {
                 Thread.sleep(processingTime);
-            } catch (InterruptedException e) {
+            }
+            catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
         }
     }
 
@@ -54,6 +54,12 @@ public class CPU_Simulator
         for (int i = 0; i < tasks.size(); i++) {
             Thread thread = new Thread(tasks.get(i));
             thread.start();
+            try {
+                thread.join();
+            }
+            catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             executedTasks.add(tasks.get(i).ID);
         }
 
