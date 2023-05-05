@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 public class FindMultiples
 {
+    int sum = 0;
     boolean workDone3=false;
     boolean workDone5=false;
     boolean workDone7=false;
@@ -92,6 +93,42 @@ public class Group3 implements Runnable {
 
         }
     }
+    public class LastThread implements Runnable{
+
+        @Override
+        public void run() {
+            for (int int1:counter3){
+                total.add(int1);
+                sum+=int1;
+            }
+            for(int int1:counter5){
+                boolean unique=true;
+                for (int int2:total){
+                    if(int1==int2){
+                        unique=false;
+                    }
+                }
+                if(unique){
+                    total.add(int1);
+                    sum+=int1;
+                }
+            }
+            for(int int1:counter7){
+                boolean unique=true;
+                for (int int2:total){
+                    if(int1==int2){
+                        unique=false;
+                    }
+                }
+                if(unique){
+                    total.add(int1);
+                    sum+=int1;
+                }
+            }
+
+        }
+        }
+
 
     // TODO create the required multithreading class/classes using your preferred method.
 
@@ -101,13 +138,19 @@ public class Group3 implements Runnable {
     New Threads and tasks should be created here.
     */
     public int getSum(int n) {
-        int sum = 0;
+
         Thread thread1=new Thread(new Group3(n));
         Thread thread2=new Thread(new Group5(n));
         Thread thread3=new Thread(new Group7(n));
+        Thread thread4=new Thread(new LastThread());
         thread1.start();
         thread2.start();
         thread3.start();
+        try {
+            thread4.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         if(workDone3 && workDone5 && workDone7){
             for (int int1:counter3){
                 total.add(int1);
