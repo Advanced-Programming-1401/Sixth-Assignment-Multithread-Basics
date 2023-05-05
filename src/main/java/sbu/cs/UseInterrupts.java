@@ -12,13 +12,13 @@ package sbu.cs;
 
 public class UseInterrupts
 {
-/*
-    TODO
-     Analyse the following class and add new code where necessary.
-     If an object from this type of thread is Interrupted, it must print this:
-        "{ThreadName} has been interrupted"
-     And then terminate itself.
- */
+    /*
+        TODO
+         Analyse the following class and add new code where necessary.
+         If an object from this type of thread is Interrupted, it must print this:
+            "{ThreadName} has been interrupted"
+         And then terminate itself.
+     */
     public static class SleepThread extends Thread {
         int sleepCounter;
 
@@ -47,14 +47,14 @@ public class UseInterrupts
         }
     }
 
-/*
-    TODO
-     Analyse the following class and add new code where necessary.
-     If an object from this type of thread is Interrupted, it must print this:
-        "{ThreadName} has been interrupted"
-     And then terminate itself.
-     (Hint: Use the isInterrupted() method)
- */
+    /*
+        TODO
+         Analyse the following class and add new code where necessary.
+         If an object from this type of thread is Interrupted, it must print this:
+            "{ThreadName} has been interrupted"
+         And then terminate itself.
+         (Hint: Use the isInterrupted() method)
+     */
     public static class LoopThread extends Thread {
         int value;
         public LoopThread(int value) {
@@ -74,10 +74,10 @@ public class UseInterrupts
         }
     }
 
-/*
-    You can add new code to the main function. This is where you must utilize interrupts.
-    No existing line of code should be changed or deleted.
- */
+    /*
+        You can add new code to the main function. This is where you must utilize interrupts.
+        No existing line of code should be changed or deleted.
+     */
     public static void main(String[] args) {
         SleepThread sleepThread = new SleepThread(5);
         sleepThread.start();
