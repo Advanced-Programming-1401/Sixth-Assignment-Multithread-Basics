@@ -10,18 +10,15 @@ package sbu.cs;
     Take note that you are NOT ALLOWED to change or delete any existing line of code.
  */
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class UseInterrupts
 {
-/*
-    TODO
-     Analyse the following class and add new code where necessary.
-     If an object from this type of thread is Interrupted, it must print this:
-        "{ThreadName} has been interrupted"
-     And then terminate itself.
- */
+    /*
+        TODO
+         Analyse the following class and add new code where necessary.
+         If an object from this type of thread is Interrupted, it must print this:
+            "{ThreadName} has been interrupted"
+         And then terminate itself.
+     */
     public static class SleepThread extends Thread {
         int sleepCounter;
 
@@ -50,14 +47,14 @@ public class UseInterrupts
         }
     }
 
-/*
-    TODO
-     Analyse the following class and add new code where necessary.
-     If an object from this type of thread is Interrupted, it must print this:
-        "{ThreadName} has been interrupted"
-     And then terminate itself.
-     (Hint: Use the isInterrupted() method)
- */
+    /*
+        TODO
+         Analyse the following class and add new code where necessary.
+         If an object from this type of thread is Interrupted, it must print this:
+            "{ThreadName} has been interrupted"
+         And then terminate itself.
+         (Hint: Use the isInterrupted() method)
+     */
     public static class LoopThread extends Thread {
         int value;
         public LoopThread(int value) {
@@ -77,38 +74,18 @@ public class UseInterrupts
         }
     }
 
-/*
-    You can add new code to the main function. This is where you must utilize interrupts.
-    No existing line of code should be changed or deleted.
- */
+    /*
+        You can add new code to the main function. This is where you must utilize interrupts.
+        No existing line of code should be changed or deleted.
+     */
     public static void main(String[] args) {
         SleepThread sleepThread = new SleepThread(5);
         sleepThread.start();
 
-        Timer sleepTimer = new Timer();
-        sleepTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (sleepThread.isAlive()) {
-                    sleepThread.interrupt();
-                    System.out.println(sleepThread.getName() + " has been interrupted");
-                }
-            }
-        }, 3000);
         // TODO  Check if this thread runs for longer than 3 seconds (if it does, interrupt it)
 
         LoopThread loopThread = new LoopThread(3);
         loopThread.start();
-        Timer loopTimer = new Timer();
-        loopTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (loopThread.isAlive()) {
-                    loopThread.interrupt();
-                    System.out.println(loopThread.getName() + " has been interrupted");
-                }
-            }
-        }, 3000);
 
         // TODO  Check if this thread runs for longer than 3 seconds (if it does, interrupt it)
 

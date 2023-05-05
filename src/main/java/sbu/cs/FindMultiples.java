@@ -18,68 +18,36 @@ package sbu.cs;
 
     Use the tests provided in the test folder to ensure your code works correctly.
  */
-
 import java.util.*;
-
-class divisibleBy3 extends Thread{
-
-
-    private long n;
-    public divisibleBy3(long n){
-        this.n=n;
-    }
-    @Override
-    public void run() {
-        for (long i=1 ; i<=n ; i++){
-            if (i%3==0L){
-                FindMultiples.temp=i;
-                FindMultiples.increment();
-            }
-        }
-    }
-
-}
-
-class divisibleBy5 extends Thread{
-
-
-    private long n;
-    public divisibleBy5(long n){
-        this.n=n;
-    }
-    @Override
-    public void run() {
-        for (long i=1 ; i<=n ; i++){
-            if (i%5==0L){
-                FindMultiples.temp=i;
-                FindMultiples.increment();
-            }
-        }
-    }
-
-}
-
-class divisibleBy7 extends Thread{
-
-    private long n;
-    public divisibleBy7(long n){
-        this.n=n;
-    }
-    @Override
-    public void run() {
-        for (long i=1 ; i<=n ; i++){
-            if (i%7==0L){
-                FindMultiples.temp=i;
-                FindMultiples.increment();
-            }
-        }
-    }
-
-}
-
 public class FindMultiples
 {
 
+    public static ArrayList<Integer> dividends = new ArrayList<>();
+    //public static int temp = 0;
+    public static synchronized void increment(int temp){
+        dividends.add(temp);
+    }
+    public static class thread implements Runnable{
+
+        public int divisor;
+        public int n;
+
+        public thread(int n , int divisor){
+            this.n=n;
+            this.divisor=divisor;
+        }
+
+        @Override
+        public void run() {
+
+            for (int i=1 ; i<=n ; i++){
+                if (i%divisor==0){
+                    //temp=i;
+                    increment(i);
+                }
+            }
+        }
+    }
     // TODO create the required multithreading class/classes using your preferred method.
 
 
@@ -87,76 +55,30 @@ public class FindMultiples
     The getSum function should be called at the start of your program.
     New Threads and tasks should be created here.
     */
-
-    public static synchronized void increment(){
-        FindMultiples.dividends.add(FindMultiples.temp);
-    }
-    public static ArrayList<Long> dividends = new ArrayList<Long>();
-    //public static int n;
-    public static long temp = 0;
-    /*public synchronized void increment(){
-        dividends.add(temp);
-    }
-    Thread divisibleBy3  = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            for (int i=1 ; i<=n ; i++){
-                if (i%3==0){
-                    temp=i;
-                    increment();
-                }
-            }
-        }
-    });
-
-    Thread divisibleBy5  = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            for (int i=1 ; i<=n ; i++){
-                if (i%5==0){
-                    temp=i;
-                    increment();
-                }
-            }
-        }
-    });
-
-    Thread divisibleBy7  = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            for (int i=1 ; i<=n ; i++){
-                if (i%7==0){
-                    temp=i;
-                    increment();
-                }
-            }
-        }
-    });
-*/
-
-
-    public Long getSum(long n) {
-        Long sum = 0L;
-        divisibleBy3 obj3 = new divisibleBy3(n);
-        divisibleBy5 obj5 = new divisibleBy5(n);
-        divisibleBy7 obj7 = new divisibleBy7(n);
-        obj3.start();
-        obj5.start();
-        obj7.start();
+    public int getSum(int n) {
+        int sum = 0;
+        Thread t1 = new Thread(new thread(n,3));
+        Thread t2 = new Thread(new thread(n,7));
+        Thread t3 = new Thread(new thread(n,5));
+        // TODO
+        t1.start();
+        t2.start();
+        t3.start();
         try {
-            obj3.join();
-            obj5.join();
-            obj7.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            t1.join();
+            t2.join();
+            t3.join();
+        }catch (InterruptedException e){
+
         }
-        Set<Long> set = new HashSet<>(dividends);
+        Set<Integer> set = new HashSet<>(dividends);
         dividends.clear();
         dividends.addAll(set);
 
-        for (long i : dividends){
+        for (int i : dividends){
             sum+=i;
         }
+
         return sum;
     }
 
@@ -164,8 +86,6 @@ public class FindMultiples
 
         FindMultiples obj = new FindMultiples();
         Scanner input = new Scanner(System.in);
-        int n = input.nextInt();
-        obj.getSum(n);
+        System.out.println(obj.getSum(input.nextInt()));
     }
-
 }
