@@ -10,6 +10,10 @@ package sbu.cs;
     Take note that you are NOT ALLOWED to change or delete any existing line of code.
  */
 
+import java.time.Instant;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class UseInterrupts
 {
 /*
@@ -74,6 +78,39 @@ public class UseInterrupts
         }
     }
 
+ public static class TimeOut extends TimerTask{
+        private SleepThread thread;
+        private Timer timer;
+
+     public TimeOut(SleepThread thread, Timer timer) {
+         this.thread = thread;
+         this.timer = timer;
+     }
+
+     public void run(){
+        if(this.thread != null && this.thread.isAlive()){
+            this.thread.interrupt();
+            this.timer.cancel();
+        }
+     }
+ }
+
+    public static class LoopTimeOut extends TimerTask{
+        private LoopThread thread;
+        private Timer timer;
+
+        public LoopTimeOut(LoopThread thread, Timer timer) {
+            this.thread = thread;
+            this.timer = timer;
+        }
+
+        public void run(){
+            if(this.thread != null && this.thread.isAlive()){
+                this.thread.interrupt();
+                this.timer.cancel();
+            }
+        }
+    }
 /*
     You can add new code to the main function. This is where you must utilize interrupts.
     No existing line of code should be changed or deleted.
@@ -82,10 +119,19 @@ public class UseInterrupts
         SleepThread sleepThread = new SleepThread(5);
         sleepThread.start();
 
+        Timer timer = new Timer();
+        TimeOut timeOut = new TimeOut(sleepThread, timer);
+        timer.schedule(timeOut, 3000);
+
+
         // TODO  Check if this thread runs for longer than 3 seconds (if it does, interrupt it)
 
         LoopThread loopThread = new LoopThread(3);
         loopThread.start();
+
+        Timer loopTimer = new Timer();
+        LoopTimeOut loopTimeOut = new LoopTimeOut(loopThread, loopTimer);
+        timer.schedule(loopTimeOut, 3000);
 
         // TODO  Check if this thread runs for longer than 3 seconds (if it does, interrupt it)
 

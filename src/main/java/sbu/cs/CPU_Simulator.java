@@ -1,8 +1,6 @@
 package sbu.cs;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /*
     For this exercise, you must simulate a CPU with a single core.
@@ -23,7 +21,8 @@ public class CPU_Simulator
         long processingTime;
         String ID;
         public Task(String ID, long processingTime) {
-        // TODO
+            this.ID = ID;
+            this.processingTime = processingTime;
         }
 
     /*
@@ -32,6 +31,11 @@ public class CPU_Simulator
     */
         @Override
         public void run() {
+            try{
+                Thread.sleep(this.processingTime);
+            } catch (InterruptedException e){
+                System.out.println(e.getMessage());
+            }
         // TODO
         }
     }
@@ -41,8 +45,35 @@ public class CPU_Simulator
         Here the CPU selects the next shortest task to run (also known as the
         shortest task first scheduling algorithm) and creates a thread for it to run.
     */
+    class TaskComparator implements Comparator<Task> {
+        public int compare(Task t1, Task t2){
+            if(t1.processingTime == t2.processingTime)
+                return 0;
+            else if (t1.processingTime > t2.processingTime) {
+                return 1;
+            }
+            else
+                return -1;
+        }
+    }
     public ArrayList<String> startSimulation(ArrayList<Task> tasks) {
         ArrayList<String> executedTasks = new ArrayList<>();
+
+        Collections.sort(tasks, new TaskComparator());
+
+        for (Task task: tasks){
+            Thread thread = new Thread(task);
+
+            thread.start();
+
+            try {
+                thread.join();
+            } catch (InterruptedException e){
+                System.out.println(e.getMessage());
+            }
+
+            executedTasks.add(task.ID);
+        }
 
         // TODO
 
@@ -50,5 +81,18 @@ public class CPU_Simulator
     }
 
     public static void main(String[] args) {
+
+        CPU_Simulator cpu = new CPU_Simulator();
+        ArrayList<Task> task = new ArrayList<>();
+        task.add(new Task("d", 1000));
+        task.add(new Task("s", 373));
+        task.add(new Task("z", 567));
+        task.add(new Task("r", 1000));
+
+        ArrayList<String> main = cpu.startSimulation(task);
+
+        for (String item: main){
+            System.out.println(item);
+        }
     }
 }

@@ -1,0 +1,16 @@
+# In God We Trust
+# AP Sixth Assignment
+![logo](Logo.png)
+
+## Rana Rokni 401222066
+
+In this assignment I got to know the basic multi thread concept and syntax in java. Multithreading is a Java feature that allows concurrent execution of two or more parts of a program for maximum utilization of CPU. Each part of such program is called a thread. So, threads are light-weight processes within a process.
+
+There were 3 classes to be implemented:
+
+* CPU Simulator: Java comparator is used to sort the input arrayList.
+* FindMaltiple: In which the threadPool is being used.
+* UseInterrupt: To interrupt a thread I used TimerTask and Timer  which are java util classes that we use to schedule tasks in a background thread
+
+
+ 
