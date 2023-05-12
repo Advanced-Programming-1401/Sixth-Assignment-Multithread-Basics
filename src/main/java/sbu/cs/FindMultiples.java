@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class FindMultiples
 {
-    int sum = 0;
+    int sum ;
     boolean workDone3=false;
     boolean workDone5=false;
     boolean workDone7=false;
@@ -42,9 +42,10 @@ public class Group3 implements Runnable {
     @Override
     public void run(){
 
-        for(int i=1;i<=n;i++){
+        for(int i=1;i<=this.n;i++){
             if(i%3==0){
                 counter3.add(i);
+
             }
 
         }
@@ -63,8 +64,9 @@ public class Group3 implements Runnable {
         public void run(){
 
             for(int i=1;i<=n;i++){
-                if(i%5==0){
+                if(i%5==0&&i%3!=0){
                     counter5.add(i);
+
                 }
 
             }
@@ -83,8 +85,9 @@ public class Group3 implements Runnable {
         public void run(){
 
             for(int i=1;i<=n;i++){
-                if(i%7==0){
+                if(i%7==0&&i%5!=0&&i%3!=0){
                     counter7.add(i);
+
                 }
 
             }
@@ -93,41 +96,6 @@ public class Group3 implements Runnable {
 
         }
     }
-    public class LastThread implements Runnable{
-
-        @Override
-        public void run() {
-            for (int int1:counter3){
-                total.add(int1);
-                sum+=int1;
-            }
-            for(int int1:counter5){
-                boolean unique=true;
-                for (int int2:total){
-                    if(int1==int2){
-                        unique=false;
-                    }
-                }
-                if(unique){
-                    total.add(int1);
-                    sum+=int1;
-                }
-            }
-            for(int int1:counter7){
-                boolean unique=true;
-                for (int int2:total){
-                    if(int1==int2){
-                        unique=false;
-                    }
-                }
-                if(unique){
-                    total.add(int1);
-                    sum+=int1;
-                }
-            }
-
-        }
-        }
 
 
     // TODO create the required multithreading class/classes using your preferred method.
@@ -142,15 +110,16 @@ public class Group3 implements Runnable {
         Thread thread1=new Thread(new Group3(n));
         Thread thread2=new Thread(new Group5(n));
         Thread thread3=new Thread(new Group7(n));
-        Thread thread4=new Thread(new LastThread());
+        //Thread thread4=new Thread(new LastThread());
         thread1.start();
         thread2.start();
         thread3.start();
         try {
-            thread4.join();
+           thread1.join();
+           thread2.join();
+           thread3.join();
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+          throw new RuntimeException(e);}
         if(workDone3 && workDone5 && workDone7){
             for (int int1:counter3){
                 total.add(int1);
@@ -192,8 +161,7 @@ public class Group3 implements Runnable {
     }
 
     public static void main(String[] args) {
-        FindMultiples findMultiples=new FindMultiples();
-        findMultiples.getSum(9);
+
 
 
     }
